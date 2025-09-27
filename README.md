@@ -44,16 +44,19 @@ Architecture (at a glance)
 
 🚀 Quick Start
 📝 Step 1: Create the Kafka Topic (one-time only)
-<details> <summary>💻 Windows (PowerShell / CMD)</summary>
+
+Windows (PowerShell / CMD):
+
 cd C:\kafka\kafka_2.13-4.1.0
 bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 ^
   --create --topic sales --partitions 3 --replication-factor 1
 
-</details> <details> <summary>🐧 macOS / Linux (bash)</summary>
+
+macOS / Linux (bash):
+
 kafka-topics.sh --bootstrap-server localhost:9092 \
   --create --topic sales --partitions 3 --replication-factor 1
 
-</details>
 📦 Step 2: Start Producing Mock Sales
 
 Stream 3 sales per second into the sales topic:
