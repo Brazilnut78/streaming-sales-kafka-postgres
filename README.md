@@ -22,12 +22,6 @@ and uses `ON CONFLICT DO NOTHING` for idempotent upserts (exactly-once per `id`)
 > bin\windows\kafka-configs.bat --bootstrap-server localhost:9092 --entity-type topics --entity-name sales --alter --add-config retention.ms=86400000
 > ```
 
-> Quick SQL checks:
-> ```sql
-> SELECT COUNT(*) AS rows, MAX(ts) AS latest_ts FROM public.sales_events;
-> SELECT * FROM public.sales_events ORDER BY ts DESC LIMIT 10;
-> ```
-
 ---
 
 > ## Why this project?
