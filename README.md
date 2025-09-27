@@ -28,13 +28,13 @@ and uses `ON CONFLICT DO NOTHING` for idempotent upserts (exactly-once per `id`)
 > SELECT * FROM public.sales_events ORDER BY ts DESC LIMIT 10;
 > ```
 
-Kafka Broker
-Ensure a Kafka broker is running locally on localhost:9092.
+## Kafka Broker
 
-Start with:
+Ensure a Kafka broker is running locally on `localhost:9092`.
 
+**Windows (PowerShell):**
+```powershell
 .\bin\windows\kafka-server-start.bat .\config\server.properties
-
 
 (Windows PowerShell)
 
@@ -43,9 +43,7 @@ Or:
 kafka-server-start.sh config/server.properties
 
 
-(macOS/Linux)
-
-The broker must be running before creating topics, producing, or consuming.
+kafka-server-start.sh config/server.properties
 
 ## Why this project?
 
