@@ -60,6 +60,11 @@ From your Kafka install folder, start ZooKeeper and the Kafka broker:
     bin\windows\zookeeper-server-start.bat config\zookeeper.properties
     bin\windows\kafka-server-start.bat config\server.properties
 
+> ⚠️ Note: ZooKeeper is only required for older Kafka versions (pre–3.3).  
+> Modern Kafka releases (KRaft mode) no longer need ZooKeeper, since Kafka now manages its own metadata and cluster coordination.  
+> If you are using Kafka 3.3+ in KRaft mode, you can skip the ZooKeeper step and just start the broker.
+
+
 ### Step 2: Create the Kafka Topic (one-time only)
 Create the sales topic with 3 partitions:
 
