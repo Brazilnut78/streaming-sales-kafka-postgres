@@ -42,126 +42,41 @@ Architecture (at a glance)
 +-------------+                                       +------------------+
      JSON events: {id, ts, store_id, amount_usd, channel}
 
-Quick start
-1) Create the topic (one time)
+🚀 Quick Start
+1. Create the Kafka Topic (one-time setup)
 
-Windows (Kafka for Windows):
-
-cd C:\kafka\kafka_2.13-4.1.0
-bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 --create --topic sales --partitions 3 --replication-factor 1
-
-
-macOS/Linux:
-
-kafka-topics --bootstrap-server localhost:9092 --create --topic sales --partitions 3 --replication-factor 1
-
-2) Run the producer
-py producer.py --bootstrap localhost:9092 --topic sales --rate 1
-
-3) Run the consumer (writes to Postgres)
-
-Replace the password before running (see “Passwords & Safety” below).
-
-py consumer_to_pg.py
-
-4) Verify in SQL
-SELECT COUNT(*) AS rows, MAX(ts) AS latest_ts FROM public.sales_events;
-SELECT * FROM public.sales_events ORDER BY ts DESC LIMIT 10;
-
-Create the table (if you need to do it manually)
-CREATE TABLE IF NOT EXISTS public.sales_events (
-  id         UUID PRIMARY KEY,
-  ts         TIMESTAMPTZ NOT NULL,
-  store_id   INT NOT NULL,
-  amount_usd NUMERIC(10,2) NOT NULL,
-  channel    TEXT NOT NULL
-);
-
-Keep Kafka from filling disk
-
-Keep last 1 day of data:
+Windows (PowerShell / CMD):
 
 cd C:\kafka\kafka_2.13-4.1.0
-bin\windows\kafka-configs.bat --bootstrap-server localhost:9092 --entity-type topics --entity-name sales --alter --add-config retention.ms=86400000
+bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 ^
+  --create --topic sales --partitions 3 --replication-factor 1
 
 
-Optionally also cap size (~50 MB):
+macOS / Linux (bash):
 
-bin\windows\kafka-configs.bat --bootstrap-server localhost:9092 --entity-type topics --entity-name sales --alter --add-config retention.bytes=52428800
+kafka-topics.sh --bootstrap-server localhost:9092 \
+  --create --topic sales --partitions 3 --replication-factor 1
 
+2. Start Producing Mock Sales
 
-Check settings:
+Run the producer to stream 3 events per second into the sales topic:
 
-bin\windows\kafka-configs.bat --bootstrap-server localhost:9092 --entity-type topics --entity-name sales --describe
+python producer.py --bootstrap-server localhost:9092 --topic sales --sales-per-second 3
 
-Useful SQL snippets
+3. Start the Consumer (Postgres writer)
 
-Last 5 minutes by channel
+Pipe sales events from Kafka into PostgreSQL:
 
-SELECT channel,
-       COUNT(*) AS events,
-       ROUND(SUM(amount_usd), 2) AS revenue
-FROM public.sales_events
-WHERE ts >= now() - interval '5 minutes'
-GROUP BY channel
-ORDER BY revenue DESC;
+python consumer_to_pg.py
 
+4. Verify in SQL
 
-Table & DB size
+Run a quick sanity check in Postgres:
 
-SELECT pg_size_pretty(pg_total_relation_size('public.sales_events')) AS table_size;
-SELECT pg_size_pretty(pg_database_size('dvdrental')) AS db_size;
+SELECT COUNT(*) AS rows, MAX(ts) AS latest_ts 
+FROM public.sales_events;
 
-Passwords & safety
-
-In consumer_to_pg.py, the password is a placeholder (CHANGE_ME).
-
-Option A (simple): edit it locally before running—do not commit real passwords.
-
-Option B (safer): read from an environment variable instead. Example change:
-
-import os
-PG["password"] = os.getenv("PGPASSWORD") or "CHANGE_ME"
-
-
-Run with:
-
-set PGPASSWORD=YourPassword
-py consumer_to_pg.py
-
-
-If you ever commit a real password, rotate it in Postgres immediately:
-
-ALTER ROLE postgres WITH PASSWORD 'NewStrongPassword!';
-
-Monitoring & troubleshooting
-
-Is the consumer running?
-
-cd C:\kafka\kafka_2.13-4.1.0
-bin\windows\kafka-consumer-groups.bat --bootstrap-server localhost:9092 --group sales-to-pg --describe
-
-
-If it says no active members, the consumer isn’t running.
-
-LAG dropping toward 0 = healthy consumption.
-
-Common fixes
-
-relation "public.sales_events" does not exist → run the CREATE TABLE in the correct database.
-
-password authentication failed → wrong credentials; reset or update.
-
-No rows in SQL but console consumer shows data → your Python consumer isn’t running or points to the wrong dbname/port.
-
-pip not recognized → use py -m pip install -r requirements.txt.
-
-Cleanup (optional)
-
-Keep only 30 days in Postgres:
-
-DELETE FROM public.sales_events WHERE ts < now() - interval '30 days';
-VACUUM (ANALYZE) public.sales_events;
-
-
-Schedule the query with Windows Task Scheduler or use pgAgent if you want it automated.
+SELECT * 
+FROM public.sales_events 
+ORDER BY ts DESC 
+LIMIT 10;
