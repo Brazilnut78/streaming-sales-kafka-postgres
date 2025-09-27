@@ -43,35 +43,32 @@ Architecture (at a glance)
      JSON events: {id, ts, store_id, amount_usd, channel}
 
 🚀 Quick Start
-1. Create the Kafka Topic (one-time setup)
-
-Windows (PowerShell / CMD):
-
+📝 Step 1: Create the Kafka Topic (one-time only)
+<details> <summary>💻 Windows (PowerShell / CMD)</summary>
 cd C:\kafka\kafka_2.13-4.1.0
 bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 ^
   --create --topic sales --partitions 3 --replication-factor 1
 
-
-macOS / Linux (bash):
-
+</details> <details> <summary>🐧 macOS / Linux (bash)</summary>
 kafka-topics.sh --bootstrap-server localhost:9092 \
   --create --topic sales --partitions 3 --replication-factor 1
 
-2. Start Producing Mock Sales
+</details>
+📦 Step 2: Start Producing Mock Sales
 
-Run the producer to stream 3 events per second into the sales topic:
+Stream 3 sales per second into the sales topic:
 
 python producer.py --bootstrap-server localhost:9092 --topic sales --sales-per-second 3
 
-3. Start the Consumer (Postgres writer)
+🗄️ Step 3: Start the Consumer (Write to Postgres)
 
-Pipe sales events from Kafka into PostgreSQL:
+Consume messages and persist them into Postgres:
 
 python consumer_to_pg.py
 
-4. Verify in SQL
+🔍 Step 4: Verify in SQL
 
-Run a quick sanity check in Postgres:
+Check the latest rows directly in Postgres:
 
 SELECT COUNT(*) AS rows, MAX(ts) AS latest_ts 
 FROM public.sales_events;
