@@ -47,10 +47,6 @@ and uses `ON CONFLICT DO NOTHING` for idempotent upserts (exactly-once per `id`)
 
 ---
 
-## Quick Start
-
-**Windows (PowerShell / CMD):**
-
 ## 🚀 Quick Start
 
 ### Step 1: Create the Kafka Topic (one-time only)
