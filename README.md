@@ -37,10 +37,14 @@ Practice the essentials of streaming systems on a laptop: topics, partitions, co
 Analyze results instantly in SQL and build intuition for lag, throughput, and backpressure.
 
 Architecture (at a glance)
-+-------------+         Kafka (topic: sales)         +------------------+
-| producer.py |  -->  [ sales-0 | sales-1 | ... ] -> | consumer_to_pg.py | -> PostgreSQL (sales_events)
-+-------------+                                       +------------------+
-     JSON events: {id, ts, store_id, amount_usd, channel}
++-------------+     Kafka (topic: sales)     +------------------+
+| producer.py | --> [ sales-0 | sales-1 | … ] --> | consumer_to_pg.py |
++-------------+                               +------------------+
+                                                   |
+                                                   v
+                                       PostgreSQL (sales_events)
+
+JSON events: { id, ts, store_id, amount_usd, channel }
 
 🚀 Quick Start
 📝 Step 1: Create the Kafka Topic (one-time only)
