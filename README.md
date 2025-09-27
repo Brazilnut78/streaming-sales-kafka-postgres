@@ -28,38 +28,31 @@ and uses `ON CONFLICT DO NOTHING` for idempotent upserts (exactly-once per `id`)
 > SELECT * FROM public.sales_events ORDER BY ts DESC LIMIT 10;
 > ```
 
-## Kafka Broker
+> ## Kafka Broker
+> Ensure a Kafka broker is running locally on `localhost:9092`.
 
-Ensure a Kafka broker is running locally on `localhost:9092`.
+> **Windows (PowerShell):**
+> ```powershell
+> .\bin\windows\kafka-server-start.bat .\config\server.properties
 
-**Windows (PowerShell):**
-```powershell
-.\bin\windows\kafka-server-start.bat .\config\server.properties
+> (Windows PowerShell)
 
-(Windows PowerShell)
+> Or:
+> kafka-server-start.sh config/server.properties
 
-Or:
+> ## Why this project?
 
-kafka-server-start.sh config/server.properties
+> Simulates a real-time API "firehose" without paid services or cloud bills.
+> Practice the essentials of streaming systems on a laptop: topics, partitions, consumer groups, offsets, idempotent upserts, and retention.
+> Analyze results instantly in SQL and build intuition for lag, throughput, and backpressure.
 
-
-kafka-server-start.sh config/server.properties
-
-## Why this project?
-
-Simulates a real-time API "firehose" without paid services or cloud bills.
-
-Practice the essentials of streaming systems on a laptop: topics, partitions, consumer groups, offsets, idempotent upserts, and retention.
-
-Analyze results instantly in SQL and build intuition for lag, throughput, and backpressure.
-
-### Architecture (at a glance)
-+-------------+   Kafka (topic: sales)   +------------------+
-| producer.py | --> [ sales-0 | sales-1 | … ] --> | consumer_to_pg.py |
-+-------------+                          +------------------+
-|
-v
-PostgreSQL (sales_events)
+> ### Architecture (at a glance)
+> +-------------+   Kafka (topic: sales)   +------------------+
+> | producer.py | --> [ sales-0 | sales-1 | … ] --> | consumer_to_pg.py |
+> +-------------+                          +------------------+
+> |
+> v
+> PostgreSQL (sales_events)
 
 **JSON events:** `{ id, ts, store_id, amount_usd, channel }`
 
