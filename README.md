@@ -77,6 +77,8 @@ python consumer_to_pg.py
 
 Check the latest rows directly in Postgres:
 
+Quick SQL checks:
+
 SELECT COUNT(*) AS rows, MAX(ts) AS latest_ts 
 FROM public.sales_events;
 
