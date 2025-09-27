@@ -29,18 +29,6 @@ and uses `ON CONFLICT DO NOTHING` for idempotent upserts (exactly-once per `id`)
 > ```
 
 
-> ## Kafka Broker
-> Ensure a Kafka broker is running locally on `localhost:9092`.
-
-> **Windows (PowerShell):**
-> ```powershell
-> .\bin\windows\kafka-server-start.bat .\config\server.properties
-
-> (Windows PowerShell)
-
-> Or:
-> kafka-server-start.sh config/server.properties
-
 > ## Why this project?
 
 > Simulates a real-time API "firehose" without paid services or cloud bills.
@@ -61,20 +49,30 @@ and uses `ON CONFLICT DO NOTHING` for idempotent upserts (exactly-once per `id`)
 
 ## Quick Start
 
-### 📝 Step 1: Create the Kafka Topic (one-time only)
+**Windows (PowerShell / CMD):**
+
+## 🚀 Quick Start
+
+### Step 1: Create the Kafka Topic (one-time only)
 
 **Windows (PowerShell / CMD):**
 ```powershell
 cd C:\kafka\kafka_2.13-4.1.0
 bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 ^
   --create --topic sales --partitions 3 --replication-factor 1
+
 macOS / Linux (bash):
-bashkafka-topics.sh --bootstrap-server localhost:9092 \
+
+kafka-topics.sh --bootstrap-server localhost:9092 \
   --create --topic sales --partitions 3 --replication-factor 1
 
-📦 Step 2: Start Producing Mock Sales
+
+### 🧱 Step 2: Start Producing Mock Sales
 Stream 3 sales per second into the sales topic:
-bashpython producer.py --bootstrap-server localhost:9092 --topic sales --sales-per-second 3
+
+```bash
+python producer.py --bootstrap-server localhost:9092 --topic sales --sales-per-second 3
+
 
 🗄️ Step 3: Start the Consumer (Write to Postgres)
 Consume messages and persist them into Postgres:
