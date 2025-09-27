@@ -48,7 +48,7 @@ PostgreSQL (sales_events)
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 📝 Step 1: Create the Kafka Topic (one-time only)
 
