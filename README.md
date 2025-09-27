@@ -56,14 +56,23 @@ and uses `ON CONFLICT DO NOTHING` for idempotent upserts (exactly-once per `id`)
 
 From your Kafka install folder, start ZooKeeper and the Kafka broker:
 
-```powershell
-cd C:\kafka\kafka_2.13-4.1.0
-bin\windows\zookeeper-server-start.bat config\zookeeper.properties
-bin\windows\kafka-server-start.bat config\server.properties
+    cd C:\kafka\kafka_2.13-4.1.0
+    bin\windows\zookeeper-server-start.bat config\zookeeper.properties
+    bin\windows\kafka-server-start.bat config\server.properties
 
+### Step 2: Create the Kafka Topic (one-time only)
+Create the sales topic with 3 partitions:
 
+    cd C:\kafka\kafka_2.13-4.1.0
+    bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 ^
+      --create --topic sales --partitions 3 --replication-factor 1
 
-### Step 2:
+### Step 3: Start Producing Mock Sales
+Stream 3 sales per second into the sales topic:
 
+    python producer.py --bootstrap-server localhost:9092 --topic sales --sales-per-second 3
 
+### Step 4: Start the Consumer (Write to Postgres)
+Consume messages and persist them into Postgres:
 
+    python consumer_to_pg.py
