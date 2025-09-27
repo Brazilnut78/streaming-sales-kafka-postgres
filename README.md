@@ -64,7 +64,6 @@ From your Kafka install folder, start ZooKeeper and the Kafka broker:
 > Modern Kafka releases (KRaft mode) no longer need ZooKeeper, since Kafka now manages its own metadata and cluster coordination.  
 > If you are using Kafka 3.3+ in KRaft mode, you can skip the ZooKeeper step and just start the broker.
 
-
 ### Step 2: Create the Kafka Topic (one-time only)
 Create the sales topic with 3 partitions:
 
@@ -81,3 +80,9 @@ Stream 3 sales per second into the sales topic:
 Consume messages and persist them into Postgres:
 
     python consumer_to_pg.py
+
+### Step 5: Verify in SQL
+Check the latest rows directly in Postgres:
+
+    SELECT COUNT(*) AS rows, MAX(ts) AS latest_ts FROM public.sales_events;
+    SELECT * FROM public.sales_events ORDER BY ts DESC LIMIT 10;
