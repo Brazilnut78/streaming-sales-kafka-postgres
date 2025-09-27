@@ -28,6 +28,7 @@ and uses `ON CONFLICT DO NOTHING` for idempotent upserts (exactly-once per `id`)
 > SELECT * FROM public.sales_events ORDER BY ts DESC LIMIT 10;
 > ```
 
+
 > ## Kafka Broker
 > Ensure a Kafka broker is running locally on `localhost:9092`.
 
