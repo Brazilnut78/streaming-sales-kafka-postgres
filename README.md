@@ -37,13 +37,11 @@ Practice the essentials of streaming systems on a laptop: topics, partitions, co
 Analyze results instantly in SQL and build intuition for lag, throughput, and backpressure.
 
 ### Architecture (at a glance)
-
 +-------------+   Kafka (topic: sales)   +------------------+
 | producer.py | --> [ sales-0 | sales-1 | … ] --> | consumer_to_pg.py |
 +-------------+                          +------------------+
 |
 v
-
 PostgreSQL (sales_events)
 
 **JSON events:** `{ id, ts, store_id, amount_usd, channel }`
@@ -59,35 +57,20 @@ PostgreSQL (sales_events)
 cd C:\kafka\kafka_2.13-4.1.0
 bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 ^
   --create --topic sales --partitions 3 --replication-factor 1
-
 macOS / Linux (bash):
-
-kafka-topics.sh --bootstrap-server localhost:9092 \
+bashkafka-topics.sh --bootstrap-server localhost:9092 \
   --create --topic sales --partitions 3 --replication-factor 1
 
 📦 Step 2: Start Producing Mock Sales
-
 Stream 3 sales per second into the sales topic:
-
-python producer.py --bootstrap-server localhost:9092 --topic sales --sales-per-second 3
+bashpython producer.py --bootstrap-server localhost:9092 --topic sales --sales-per-second 3
 
 🗄️ Step 3: Start the Consumer (Write to Postgres)
-
 Consume messages and persist them into Postgres:
-
-python consumer_to_pg.py
+bashpython consumer_to_pg.py
 
 🔍 Step 4: Verify in SQL
-
 Check the latest rows directly in Postgres:
-
 Quick SQL checks:
-
-SELECT COUNT(*) AS rows, MAX(ts) AS latest_ts 
-FROM public.sales_events;
-
-SELECT * 
-FROM public.sales_events 
-ORDER BY ts DESC 
-LIMIT 10;
-
+sqlSELECT COUNT(*) AS rows, MAX(ts) AS latest_ts FROM public.sales_events;
+SELECT * FROM public.sales_events ORDER BY ts DESC LIMIT 10;
