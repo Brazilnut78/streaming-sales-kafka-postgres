@@ -68,9 +68,3 @@ bashpython producer.py --bootstrap-server localhost:9092 --topic sales --sales-p
 🗄️ Step 3: Start the Consumer (Write to Postgres)
 Consume messages and persist them into Postgres:
 bashpython consumer_to_pg.py
-
-🔍 Step 4: Verify in SQL
-Check the latest rows directly in Postgres:
-Quick SQL checks:
-sqlSELECT COUNT(*) AS rows, MAX(ts) AS latest_ts FROM public.sales_events;
-SELECT * FROM public.sales_events ORDER BY ts DESC LIMIT 10;
