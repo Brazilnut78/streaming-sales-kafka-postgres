@@ -1,6 +1,17 @@
-Tiny streaming demo: a Python Kafka **producer** generates mock sales events; a Python **consumer** inserts them into PostgreSQL. 
-Includes quick setup, topic retention tips, and SQL checks. The consumer commits Kafka offsets **after** a successful DB insert 
-and uses `ON CONFLICT DO NOTHING` for idempotent upserts (exactly-once per `id`).
+## 📖 Overview
+
+A lightweight streaming demo you can run on your laptop:  
+- A **Python Kafka producer** generates mock sales events.  
+- A **Python consumer** writes them into PostgreSQL.  
+- Includes quick setup, topic retention tweaks, and simple SQL checks.  
+- The consumer commits offsets **only after a successful DB insert** and uses  
+  `ON CONFLICT DO NOTHING` for idempotent upserts (guaranteeing exactly-once per ID).
+
+## ❓ Why this project?
+
+- Simulates a real-time API “firehose” **without paid cloud services or extra costs**.  
+- Lets you practice the **essentials of streaming systems**: topics, partitions, consumer groups, offsets, idempotent upserts, and retention.  
+- Analyze results instantly in SQL and build intuition for **lag, throughput, and backpressure** — all on a local machine.  
 
 ### Prereqs
 - **Python** 3.10+ (Windows/macOS/Linux)
@@ -21,14 +32,6 @@ and uses `ON CONFLICT DO NOTHING` for idempotent upserts (exactly-once per `id`)
 > cd C:\kafka\kafka_2.13-4.1.0
 > bin\windows\kafka-configs.bat --bootstrap-server localhost:9092 --entity-type topics --entity-name sales --alter --add-config retention.ms=86400000
 > ```
-
----
-
-> ## Why this project?
-
-> Simulates a real-time API "firehose" without paid services or cloud bills.
-> Practice the essentials of streaming systems on a laptop: topics, partitions, consumer groups, offsets, idempotent upserts, and retention.
-> Analyze results instantly in SQL and build intuition for lag, throughput, and backpressure.
 
 ---
 
