@@ -28,33 +28,37 @@ and uses `ON CONFLICT DO NOTHING` for idempotent upserts (exactly-once per `id`)
 > SELECT * FROM public.sales_events ORDER BY ts DESC LIMIT 10;
 > ```
 
-Why this project?
+## Why this project?
 
-Simulates a real-time API “firehose” without paid services or cloud bills.
+Simulates a real-time API "firehose" without paid services or cloud bills.
 
 Practice the essentials of streaming systems on a laptop: topics, partitions, consumer groups, offsets, idempotent upserts, and retention.
 
 Analyze results instantly in SQL and build intuition for lag, throughput, and backpressure.
 
-Architecture (at a glance)
-+-------------+     Kafka (topic: sales)     +------------------+
+### Architecture (at a glance)
+
++-------------+   Kafka (topic: sales)   +------------------+
 | producer.py | --> [ sales-0 | sales-1 | … ] --> | consumer_to_pg.py |
-+-------------+                               +------------------+
-                                                   |
-                                                   v
-                                       PostgreSQL (sales_events)
++-------------+                          +------------------+
+|
+v
 
-JSON events: { id, ts, store_id, amount_usd, channel }
+PostgreSQL (sales_events)
 
-🚀 Quick Start
-📝 Step 1: Create the Kafka Topic (one-time only)
+**JSON events:** `{ id, ts, store_id, amount_usd, channel }`
 
-Windows (PowerShell / CMD):
+---
 
+## 🚀 Quick Start
+
+### 📝 Step 1: Create the Kafka Topic (one-time only)
+
+**Windows (PowerShell / CMD):**
+```powershell
 cd C:\kafka\kafka_2.13-4.1.0
 bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 ^
   --create --topic sales --partitions 3 --replication-factor 1
-
 
 macOS / Linux (bash):
 
