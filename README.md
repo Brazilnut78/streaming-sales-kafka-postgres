@@ -37,12 +37,11 @@ A lightweight streaming demo you can run on your laptop:
 
 ## 🏗️ Architecture (at a glance)
 
-+-------------+       +------------------+       +-------------------------+
-| producer.py | --->  | Kafka (topic: sales) | ---> | consumer_to_pg.py       |
-+-------------+       |  [ sales-0 | sales-1 | … ] |       +-----------------+
-                      +------------------+                |
-                                                          v
-                                                PostgreSQL (sales_events)
+1. **producer.py** → generates mock sales events  
+2. **Kafka (topic: `sales`)** → stores events across partitions (`sales-0`, `sales-1`, …)  
+3. **consumer_to_pg.py** → consumes events from Kafka and inserts into Postgres  
+4. **PostgreSQL (table: `sales_events`)** → persists events for SQL queries  
+
 
 
 **JSON events:** `{ id, ts, store_id, amount_usd, channel }`
