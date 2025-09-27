@@ -86,3 +86,4 @@ SELECT *
 FROM public.sales_events 
 ORDER BY ts DESC 
 LIMIT 10;
+
