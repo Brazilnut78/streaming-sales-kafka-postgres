@@ -28,12 +28,15 @@ and uses `ON CONFLICT DO NOTHING` for idempotent upserts (exactly-once per `id`)
 > SELECT * FROM public.sales_events ORDER BY ts DESC LIMIT 10;
 > ```
 
+---
 
 > ## Why this project?
 
 > Simulates a real-time API "firehose" without paid services or cloud bills.
 > Practice the essentials of streaming systems on a laptop: topics, partitions, consumer groups, offsets, idempotent upserts, and retention.
 > Analyze results instantly in SQL and build intuition for lag, throughput, and backpressure.
+
+---
 
 > ### Architecture (at a glance)
 > +-------------+   Kafka (topic: sales)   +------------------+
