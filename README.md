@@ -84,3 +84,18 @@ Check the latest rows directly in Postgres:
 
     SELECT COUNT(*) AS rows, MAX(ts) AS latest_ts FROM public.sales_events;
     SELECT * FROM public.sales_events ORDER BY ts DESC LIMIT 10;
+
+## 📊 Streamlit Dashboard
+
+This repository now includes a live dashboard built with Streamlit.
+
+### Run the Dashboard
+
+Run the following commands to install dependencies and start the dashboard:
+
+```bash
+pip install -r requirements.txt && streamlit run Dashboard_Live_Sales.py
+
+
+
+    
