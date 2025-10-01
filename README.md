@@ -27,12 +27,12 @@ A lightweight streaming demo you can run on your laptop:
 > There are 2 sets of deps:
 >
 > ```bash
-# For the Streamlit Dashboard (cloud or local)
-pip install -r requirements.streamlitapp.txt
-
-# For the local Kafka → Postgres pipeline
-pip install -r requirements-pipeline.txt
-
+> # For the Streamlit Dashboard (cloud or local)
+> pip install -r requirements.streamlitapp.txt
+>
+> # For the local Kafka → Postgres pipeline
+> pip install -r requirements-pipeline.txt
+>
 
 > (Optional) keep Kafka small (1-day retention):
 > ```bat
