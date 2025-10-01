@@ -102,7 +102,3 @@ Run the following commands to install dependencies and start the dashboard:
 
 ```bash
 pip install -r requirements.txt && streamlit run Dashboard_Live_Sales.py
-
-
-
-    
