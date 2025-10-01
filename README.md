@@ -22,9 +22,9 @@ A lightweight streaming demo you can run on your laptop:
   - pgAdmin or `psql` for quick checks
 - Pip packages (see requirements files below)
 
-> Install Dependencies:
+Install Dependencies:
 >
-** There are 2 sets of deps:**
+There are 2 sets of deps:
 >
 > ```bash
 > # For the Streamlit Dashboard (cloud or local)
@@ -34,7 +34,7 @@ A lightweight streaming demo you can run on your laptop:
 > pip install -r requirements-pipeline.txt
 >
 
-** (Optional) keep Kafka small (1-day retention):**
+(Optional) keep Kafka small (1-day retention):**
 > ```bat
 > cd C:\kafka\kafka_2.13-4.1.0
 > bin\windows\kafka-configs.bat --bootstrap-server localhost:9092 --entity-type topics --entity-name sales --alter --add-config retention.ms=86400000
