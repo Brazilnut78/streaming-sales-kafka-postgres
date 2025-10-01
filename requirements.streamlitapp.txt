@@ -1,0 +1,6 @@
+# requirements.txt  (for the Streamlit app)
+streamlit>=1.36
+pandas>=2.0
+plotly>=5.20
+psycopg2-binary>=2.9
+python-dateutil>=2.8
