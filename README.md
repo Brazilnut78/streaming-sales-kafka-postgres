@@ -101,4 +101,4 @@ This repository now includes a live dashboard built with Streamlit.
 Run the following commands to install dependencies and start the dashboard:
 
 ```bash
-pip install -r requirements.txt && streamlit run Dashboard_Live_Sales.py
+pip install -r requirements.streamlitapp.txt && streamlit run Dashboard_Live_Sales.py
