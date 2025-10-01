@@ -6,6 +6,7 @@ A lightweight streaming demo you can run on your laptop:
 - Includes quick setup, topic retention tweaks, and simple SQL checks.  
 - The consumer commits offsets **only after a successful DB insert** and uses  
   `ON CONFLICT DO NOTHING` for idempotent upserts (guaranteeing exactly-once per ID).
+- A Streamlit dashboard visualizes the results.
 
 ## ❓ Why this project?
 
@@ -19,13 +20,19 @@ A lightweight streaming demo you can run on your laptop:
   - Topic: `sales` (create with `kafka-topics --create --topic sales --partitions 3 --replication-factor 1`)
 - **PostgreSQL** 14+ running locally (defaults in repo use DB `dvdrental`)
   - pgAdmin or `psql` for quick checks
-- **Pip packages**: `confluent-kafka`, `psycopg2-binary`
-- **Terminal**: Command Prompt/PowerShell on Windows, Terminal on macOS/Linux
+- Pip packages (see requirements files below)
 
-> Install deps:
-> ```bat
-> py -m pip install -r requirements.txt
-> ```
+> Install Dependencies:
+>
+> There are 2 sets of deps:
+>
+> ```bash
+# For the Streamlit Dashboard (cloud or local)
+pip install -r requirements.streamlitapp.txt
+
+# For the local Kafka → Postgres pipeline
+pip install -r requirements-pipeline.txt
+
 
 > (Optional) keep Kafka small (1-day retention):
 > ```bat
