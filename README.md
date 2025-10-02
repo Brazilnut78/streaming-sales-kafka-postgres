@@ -70,7 +70,7 @@ From your Kafka install folder, start ZooKeeper and the Kafka broker:
 > If you are using Kafka 3.3+ in KRaft mode, you can skip the ZooKeeper step and just start the broker.
 
 ### Step 2: Create the Kafka Topic (one-time only)
-Create the sales topic with 3 partitions:
+Create the sales topic with 3 partitions (or "lanes" so you it can scale as needed):
 
     cd C:\kafka\kafka_2.13-4.1.0
     bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 ^
