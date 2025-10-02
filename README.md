@@ -34,7 +34,7 @@ There are 2 sets of deps:
 > pip install -r requirements-pipeline.txt
 >
 
-(Optional) keep Kafka small (1-day retention):**
+(Optional) keep Kafka small (1-day retention) -- so your disk doesn't fill up.  This tells kafka to auto-delete old messages after ~1 day.
 > ```bat
 > cd C:\kafka\kafka_2.13-4.1.0
 > bin\windows\kafka-configs.bat --bootstrap-server localhost:9092 --entity-type topics --entity-name sales --alter --add-config retention.ms=86400000
