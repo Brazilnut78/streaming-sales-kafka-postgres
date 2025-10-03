@@ -5,7 +5,7 @@ A lightweight streaming demo you can run on your laptop:
 - A **Python consumer** writes them into PostgreSQL.  
 - Includes quick setup, topic retention tweaks, and simple SQL checks.  
 - The consumer commits offsets **only after a successful DB insert** and uses  
-  `ON CONFLICT DO NOTHING` for idempotent upserts (guaranteeing exactly-once per ID).
+  `ON CONFLICT DO NOTHING` for idempotent upserts (guaranteeing exactly-once to the sink by primary key).
 - A Streamlit dashboard visualizes the results.
 
 ## ❓ Why this project?
